@@ -24,27 +24,21 @@ public class MedicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DatosListaMedico>> listar(@PageableDefault(size=10, sort={"nombre"}) Pageable paginacion) {
-        var page = repository.findAllByActivoTrue(paginacion).map(DatosListaMedico::new);
-
-        return ResponseEntity.ok(page);
+    public Page<DatosListaMedico> listar(@PageableDefault(size=10, sort={"nombre"}) Pageable paginacion) {
+        return repository.findAllByActivoTrue(paginacion).map(DatosListaMedico::new);
     }
 
     @Transactional
     @PutMapping
-    public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionMedico datos) {
+    public void actualizar(@RequestBody @Valid DatosActualizacionMedico datos) {
         var medico = repository.getReferenceById(datos.id());
         medico.actualizarInformaciones(datos);
-
-        return ResponseEntity.ok().build();
     }
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity eliminar(@PathVariable Long id) {
+    public void eliminar(@PathVariable Long id) {
         var medico = repository.getReferenceById(id);
         medico.eliminar();
-
-        return ResponseEntity.noContent().build();
     }
 }
