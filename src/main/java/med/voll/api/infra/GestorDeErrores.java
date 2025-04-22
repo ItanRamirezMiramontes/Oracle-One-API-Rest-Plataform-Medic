@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GestorDerErrores {
+public class GestorDeErrores {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity getionarError404() {
